@@ -1,0 +1,24 @@
+.watermark {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0.9;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #3a6b3a;
+  pointer-events: none;
+  user-select: none;
+  z-index: 9999;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255, 255, 255);
+  padding: 8px 16px;
+  border-width: 0.5px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .watermark {
+    font-size: 0.7rem;
+  }
+}
