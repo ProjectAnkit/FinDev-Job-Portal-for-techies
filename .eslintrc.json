@@ -4,6 +4,8 @@
     "es2021": true
   },
   "extends": [
+    "next",
+    "next/core-web-vitals",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@next/next/recommended"
@@ -14,3 +16,4 @@
     "@next/next/no-img-element": "warn"
   }
 }
+
