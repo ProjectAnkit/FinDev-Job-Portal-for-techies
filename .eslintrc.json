@@ -1,6 +1,16 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
-    "next",
-    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended"
   ],
+  "rules": {
+    "react/no-unescaped-entities": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@next/next/no-img-element": "warn"
+  }
 }
