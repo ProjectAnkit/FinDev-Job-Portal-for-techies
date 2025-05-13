@@ -167,7 +167,7 @@ export default function Intro() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Image
+            <img
               src="/hero-image-2.png"
               alt="Hero Image"
               className={styles.heroImage}
