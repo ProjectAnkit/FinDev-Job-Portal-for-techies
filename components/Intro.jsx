@@ -10,6 +10,7 @@ import { BsFacebook, BsGithub } from "react-icons/bs";
 import styles from "../styles/Homepage.module.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Image from 'next/image';
 
 export default function Intro() {
   const [search, setSearch] = useState("");
@@ -166,7 +167,7 @@ export default function Intro() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <img
+            <Image
               src="/hero-image-2.png"
               alt="Hero Image"
               className={styles.heroImage}
