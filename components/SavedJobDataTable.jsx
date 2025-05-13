@@ -14,7 +14,7 @@ export default function SavedJobDataTable() {
 
   useEffect(() => {
     setData(bookMarkJobData);
-  }, []);
+  }, [bookMarkJobData]);
 
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
