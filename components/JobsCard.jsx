@@ -15,7 +15,7 @@ export default function JobsCard({ job, posted }) {
       className="mx-auto transition-all duration-1000 shadow-2xl p-2 rounded-md"
     >
       <div className="mx-auto justify-center p-2 flex items-center">
-        <Image
+        <img
           width={70}
           height={70}
           className="rounded-full "
