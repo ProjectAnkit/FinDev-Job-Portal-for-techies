@@ -32,7 +32,7 @@ const NgosCard = ({ data }) => {
         <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-xl rounded-t-2xl">
           <CardHeader className="flex flex-col items-center space-y-4 pb-2">
             <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 border-white border-opacity-50">
-              <Image
+              <img
                 src={data.image}
                 alt={data.name}
                 className="h-full w-full object-cover"
