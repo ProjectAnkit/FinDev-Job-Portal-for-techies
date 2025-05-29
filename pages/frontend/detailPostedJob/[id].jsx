@@ -22,14 +22,16 @@ export default function PostedJobsDetails() {
     if (!userId || !Cookies.get("token")) {
       router.push("/auth/login");
     }
-  }, [user, userId, Cookies]);
+  }, [userId, router]);
 
   const { data, error, isLoading } = useSWR(`/get-all-Application`, () =>
     get_all_applications(id)
   );
 
   useEffect(() => {
-    if (data) setApplication(data?.data);
+    if (data) {
+      setApplication(data?.data);
+    }
   }, [data]);
 
   if (error) toast.error(error);

@@ -11,17 +11,26 @@ export default function SavedJobDataTable() {
   const bookMarkJobData = useSelector((state) => state.AppliedJob.bookMark);
 
   const [Data, setData] = useState([]);
-
-  useEffect(() => {
-    setData(bookMarkJobData);
-  }, []);
-
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    setFilteredData(Data);
-  }, [Data]);
+    setData(bookMarkJobData);
+  }, [bookMarkJobData]);
+
+  useEffect(() => {
+    if (search === "") {
+      setFilteredData(Data);
+    } else {
+      setFilteredData(
+        Data?.filter((item) => {
+          const itemData = item?.job?.company.toUpperCase();
+          const textData = search.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        })
+      );
+    }
+  }, [search, Data]);
 
   const columns = [
     {
@@ -64,20 +73,6 @@ export default function SavedJobDataTable() {
       ),
     },
   ];
-
-  useEffect(() => {
-    if (search === "") {
-      setFilteredData(Data);
-    } else {
-      setFilteredData(
-        Data?.filter((item) => {
-          const itemData = item?.job?.company.toUpperCase();
-          const textData = search.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        })
-      );
-    }
-  }, [search, Data]);
 
   const handleDelete = async (id) => {
     const res = await delete_book_mark_job(id);

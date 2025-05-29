@@ -1,7 +1,13 @@
 import { getSession } from 'next-auth/react';
 import AppliedJob from '../../../models/ApplyJob';
 import connectDB from '../../../DB/connectDB';
-import { uploadFile } from '../../../lib/utils';
+import { parseForm, uploadFile } from '../../../lib/api-utils';
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -16,11 +22,12 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const { name, email, about, job } = req.body;
+    const { fields, files } = await parseForm(req);
+    const { name, email, about, job } = fields;
     let cvPath = '';
     
-    if (req.files?.cv) {
-      cvPath = await uploadFile(req.files.cv[0], 'resumes');
+    if (files?.cv) {
+      cvPath = await uploadFile(files.cv, 'resumes');
     }
 
     const application = new AppliedJob({

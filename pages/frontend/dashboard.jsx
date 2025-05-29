@@ -43,23 +43,25 @@ export default function Dashboard() {
     if (!id || !Cookies.get("token")) {
       router.push("/auth/login");
     }
-  }, [activeUser, id, router]);
+  }, [id, router]);
 
   useEffect(() => {
-    fetchAppliedJobs();
-  }, []);
+    const fetchAppliedJobs = async () => {
+      const res = await get_my_applied_job(id);
+      const get_bookmarks = await get_book_mark_job(id);
+      if (res.success || get_bookmarks.success) {
+        dispatch(setAppliedJob(res?.data));
+        dispatch(setBookMark(get_bookmarks?.data));
+        setLoading(false);
+      } else {
+        router.push("/auth/login");
+      }
+    };
 
-  const fetchAppliedJobs = async () => {
-    const res = await get_my_applied_job(id);
-    const get_bookmarks = await get_book_mark_job(id);
-    if (res.success || get_bookmarks.success) {
-      dispatch(setAppliedJob(res?.data));
-      dispatch(setBookMark(get_bookmarks?.data));
-      setLoading(false);
-    } else {
-      router.push("/auth/login");
+    if (id) {
+      fetchAppliedJobs();
     }
-  };
+  }, [id, dispatch, router]);
 
   return (
     <>

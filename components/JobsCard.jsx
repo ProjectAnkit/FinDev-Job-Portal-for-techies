@@ -1,10 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { BsDot } from "react-icons/bs";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
-import { Button } from "./ui/button";
 
 export default function JobsCard({ job, posted }) {
   const router = useRouter();
@@ -12,51 +9,53 @@ export default function JobsCard({ job, posted }) {
   return (
     <div
       key={job._id}
-      className="mx-auto transition-all duration-1000 shadow-2xl p-2 rounded-md"
+      className="w-80 h-40 bg-white rounded-2xl shadow-[0_8px_24px_rgba(58,107,58,0.2)] p-4 flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02]"
     >
-      <div className="mx-auto justify-center p-2 flex items-center">
+      {/* Header */}
+      <div className="flex items-center gap-4">
         <Image
-          width={70}
-          height={70}
-          className="rounded-full "
+          width={45}
+          height={45}
+          className="rounded-full border border-gray-300 object-cover"
           src={
             job?.user?.image ||
             "https://xsgames.co/randomusers/avatar.php?g=male"
           }
-          alt="no image"
+          alt="User Profile"
         />
-        <div className="flex flex-col mx-2 px-2">
-          <h1 className="text-xl md:text-2xl font-semibold">
+        <div>
+          <h1 className="text-base font-semibold text-gray-900">
             {job?.user?.name}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-gray-800">
-            {job?.company}
-          </p>
+          <p className="text-sm text-gray-500">{job?.company}</p>
         </div>
       </div>
-      <div className="mb-4 flex min-w-fit items-start justify-center py-2 flex-col">
-        <div className="flex px-2 py-2 items-center justify-center ">
-          <BsDot className="text-4xl font-extrabold text-sky-700" />
-          <h1 className="text-lg text-gray-900 w-20">Salary :</h1>
-          <p className="text-base font-semibold">
-            &nbsp;&nbsp;&nbsp;₹{job?.salary}/ month
-          </p>
-        </div>
-        <div className="flex px-2 py-2 items-center justify-center">
-          <BsDot className="text-4xl font-extrabold text-sky-700" />
-          <h1 className="text-lg text-gray-900 w-20">Deadline {":"}</h1>
-          <p className="text-base  font-semibold">
-            &nbsp;&nbsp;&nbsp;
-            {new Date(`${job?.job_deadline}`).toLocaleDateString("en-GB")}
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col gap-5">
-        <div className="text-center min-w-max mx-auto px-6 rounded-2xl py-1 bg-indigo-200 text-indigo-900 capitalize">
-          <p>{job?.title} </p>
-        </div>
 
-        <button onClick={() => router.push(`/frontend/jobDetails/${job?._id}`)} className="z-10 relative">
+      {/* Job Info */}
+      <div className="mt-1 text-sm text-gray-700 space-y-1">
+        <div className="flex items-center">
+          <BsDot className="text-xl text-[#3a6b3a]" />
+          <span className="font-medium w-20">Salary:</span>
+          <span className="ml-1">₹{job?.salary}/month</span>
+        </div>
+        <div className="flex items-center">
+          <BsDot className="text-xl text-[#3a6b3a]" />
+          <span className="font-medium w-20">Deadline:</span>
+          <span className="ml-1">
+            {new Date(`${job?.job_deadline}`).toLocaleDateString("en-GB")}
+          </span>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex justify-between items-center mt-2">
+        <span className="text-xs px-3 py-1 rounded-full bg-[#3a6b3a]/10 text-[#3a6b3a] font-semibold capitalize">
+          {job?.title}
+        </span>
+        <button
+          onClick={() => router.push(`/frontend/jobDetails/${job?._id}`)}
+          className="bg-[#3a6b3a] hover:bg-[#2d522d] text-white px-3 py-1 rounded-md text-xs font-medium"
+        >
           View Detail
         </button>
       </div>

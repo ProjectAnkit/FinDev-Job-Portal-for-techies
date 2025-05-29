@@ -19,7 +19,7 @@ export default function ApplicationsDetail() {
     if (!userId || !Cookies.get("token")) {
       router.push("/auth/login");
     }
-  }, [user, userId, Cookies]);
+  }, [userId, router]);
 
   const { data, error, isLoading } = useSWR("/get-application-details", () =>
     get_application_details(id)

@@ -8,17 +8,26 @@ export default function AppliedJobDataTable() {
   const appliedJobData = useSelector((state) => state.AppliedJob.appliedJob);
 
   const [Data, setData] = useState([]);
-
-  useEffect(() => {
-    setData(appliedJobData);
-  }, []);
-
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    setFilteredData(Data);
-  }, [Data]);
+    setData(appliedJobData);
+  }, [appliedJobData]);
+
+  useEffect(() => {
+    if (search === "") {
+      setFilteredData(Data);
+    } else {
+      setFilteredData(
+        Data?.filter((item) => {
+          const itemData = item?.job?.company.toUpperCase();
+          const textData = search.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        })
+      );
+    }
+  }, [search, Data]);
 
   const columns = [
     {
@@ -62,20 +71,6 @@ export default function AppliedJobDataTable() {
       ),
     },
   ];
-
-  useEffect(() => {
-    if (search === "") {
-      setFilteredData(Data);
-    } else {
-      setFilteredData(
-        Data?.filter((item) => {
-          const itemData = item?.job?.company.toUpperCase();
-          const textData = search.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        })
-      );
-    }
-  }, [search, Data]);
 
   return (
     <>

@@ -87,7 +87,7 @@ export default function ApplyJob() {
     <>
       <NavBar />
       <div className="lg:bg-gray-50 mt-5 lg:mt-10 w-full py-20 flex flex-col items-center justify-center">
-        <h1 className="text-2xl uppercase tracking-widest font-semibold mb-8 border-b-4 border-indigo-600">
+        <h1 className="text-2xl uppercase tracking-widest font-semibold mb-8 border-b-4 border-green-600">
           Apply for Job
         </h1>
         <form
@@ -159,7 +159,7 @@ export default function ApplyJob() {
                 <IoIosAddCircle
                   onClick={() => fileInputRef.current.click()}
                   className="cursor-pointer"
-                  style={{ width: "60px", height: "60px" }}
+                  style={{ width: "40px", height: "40px" }}
                 />
                 <p>Add a file (.pdf only)</p>
                 <input
@@ -183,7 +183,7 @@ export default function ApplyJob() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-full py-2 rounded-lg bg-indigo-600 text-white font-semibold tracking-widest"
+              className="w-full py-2 rounded-lg bg-green-600 text-white font-semibold tracking-widest"
             >
               Submit Application
             </button>
