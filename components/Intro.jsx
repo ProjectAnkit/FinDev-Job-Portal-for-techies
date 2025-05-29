@@ -10,6 +10,7 @@ import { BsFacebook, BsGithub } from "react-icons/bs";
 import styles from "../styles/Homepage.module.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Image from 'next/image';
 
 export default function Intro() {
   const [search, setSearch] = useState("");

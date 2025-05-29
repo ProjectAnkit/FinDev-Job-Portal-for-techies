@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import Image from 'next/image';
 
 const NgosCard = ({ data }) => {
   const [isExpanded, setIsExpanded] = useState(false);
