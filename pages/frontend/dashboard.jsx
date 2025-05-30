@@ -40,28 +40,46 @@ export default function Dashboard() {
   const id = activeUser?._id;
 
   useEffect(() => {
-    if (!id || !Cookies.get("token")) {
+    const token = Cookies.get("token");
+    if (!token || !id) {
       router.push("/auth/login");
+      return;
     }
   }, [id, router]);
 
   useEffect(() => {
-    const fetchAppliedJobs = async () => {
-      const res = await get_my_applied_job(id);
-      const get_bookmarks = await get_book_mark_job(id);
-      if (res.success || get_bookmarks.success) {
-        dispatch(setAppliedJob(res?.data));
-        dispatch(setBookMark(get_bookmarks?.data));
+    const fetchData = async () => {
+      try {
+        if (!id) return;
+        
+        const [appliedJobsRes, bookmarksRes] = await Promise.all([
+          get_my_applied_job(id),
+          get_book_mark_job(id)
+        ]);
+
+        if (appliedJobsRes.success) {
+          dispatch(setAppliedJob(appliedJobsRes?.data));
+        }
+        
+        if (bookmarksRes.success) {
+          dispatch(setBookMark(bookmarksRes?.data));
+        }
+        
         setLoading(false);
-      } else {
-        router.push("/auth/login");
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+        setLoading(false);
       }
     };
 
     if (id) {
-      fetchAppliedJobs();
+      fetchData();
     }
-  }, [id, dispatch, router]);
+  }, [id, dispatch]);
+
+  if (!id || !Cookies.get("token")) {
+    return null; // Let the redirect happen
+  }
 
   return (
     <>

@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 //Cookies: A library for managing cookies.
 import { useDispatch } from "react-redux";
 //useDispatch: A hook for dispatching actions to the Redux store.
-import { setUserData } from "@/Utils/UserSlice";
+import { setUserData, setUserToken } from "@/Utils/UserSlice";
 //setUserData: A function that sets the user data in the Redux store.
 import styles from "../../styles/Login.module.css";
 //styles: A module for styling the login page.
@@ -25,31 +25,40 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email) {
-      setError({ ...error, email: "Email Field is Required" });
-      return;
-    }
-    if (!formData.password) {
-      setError({ ...error, password: "Password Field is required" });
-      return;
-    }
+    try {
+      const res = await login_me(formData);
+      if (res.success) {
+        // Set token with expiration
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7);
+        Cookies.set("token", res?.finalData?.token, { 
+          expires: expirationDate,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict'
+        });
 
-    const res = await login_me(formData);
-    if (res.success) {
-      var expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 7);
-      Cookies.set("token", res?.finalData?.token, { expires: expirationDate });
-      localStorage.setItem("user", JSON.stringify(res?.finalData?.user));
-      dispatch(
-        setUserData(
-          localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : null
-        )
-      );
-      Router.push("/");
-    } else {
-      toast.error(res.message);
+        // Store user data
+        const userData = res?.finalData?.user;
+        if (!userData) {
+          toast.error("Invalid user data received");
+          return;
+        }
+
+        localStorage.setItem("user", JSON.stringify(userData));
+        dispatch(setUserData(userData));
+        dispatch(setUserToken(res?.finalData?.token));
+
+        // Show success message
+        toast.success("Login successful!");
+
+        // Redirect to dashboard
+        Router.push("/frontend/dashboard");
+      } else {
+        toast.error(res.message || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An error occurred during login. Please try again.");
     }
   };
 
@@ -126,7 +135,7 @@ export default function Login() {
                   Sign in
                 </button>
                 <p className={styles["sign-up"]}>
-                  Don’t have an account yet?{" "}
+                  Don't have an account yet?{" "}
                   <Link href="/auth/register">Sign up</Link>
                 </p>
               </form>

@@ -1,4 +1,3 @@
-
 export const register_me = async (formData) => {
     try {
         const res = await fetch(`/api/auth/register`, {
@@ -24,14 +23,13 @@ export const login_me = async (formData) => {
             },
             body: JSON.stringify(formData),
         })
-        const data = res.json();
+        const data = await res.json();
         return data;
     } catch (error) {
-        console.log('error in login (service) => ', error);
+        console.error('error in login (service) => ', error);
+        return { success: false, message: "An error occurred during login" };
     }
 }
-
-
 
 export const forget_password = async (formData) => {
     try {
