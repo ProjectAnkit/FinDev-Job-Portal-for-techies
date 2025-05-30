@@ -28,12 +28,12 @@ export default async (req, res) => {
         const isMatch = await compare(password, checkUser.password);
         if (!isMatch) return res.status(401).json({ success: false, message: "Incorrect Password" });
 
-        const token = jwt.sign({ id: checkUser._id, email: checkUser.email }, process.env.JWT_SECREAT, { expiresIn: '1d' });
+        const token = jwt.sign({ id: checkUser._id, email: checkUser.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
         const finalData = {token , user : checkUser}
         return res.status(200).json({ success: true, message: "Login Successfull",  finalData})
 
     } catch (error) {
-        console.log('Error in register (server) => ', error);
+        console.log('Error in login (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry Later !" })
     }
 }

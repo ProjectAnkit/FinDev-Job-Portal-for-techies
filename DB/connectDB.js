@@ -9,7 +9,7 @@ const connectDB = async () => {
     return;
   }
 
-  const connectionUrl = process.env.DB_URI;
+  const connectionUrl = process.env.MONGODB_URI;
   try {
     await mongoose.connect(connectionUrl, { useNewUrlParser: true, useUnifiedTopology: true });
     isConnected = true;
@@ -17,8 +17,7 @@ const connectDB = async () => {
     mongoose.set("strictQuery", false);
   } catch (err) {
     console.log("Getting Error from DB connection: " + err.message);
-    // Optionally, rethrow the error or handle it as needed
-    // throw err;
+    throw err; // Rethrow the error to handle it in the API routes
   }
 };
 
